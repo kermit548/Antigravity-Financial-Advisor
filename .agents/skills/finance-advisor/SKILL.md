@@ -27,12 +27,13 @@ description: 升級版「財經小智」工作流。當使用者要諮詢全球�
 
 ## 2. 退休理財規劃與精準計算
 - 當客戶提出理財參數（例如：每年存 30 萬、存 20 年、報酬率 6%）時，**禁止使用語言模型自行估算複利**。
-- **自動化產檔工作流**：必須呼叫 `scripts/financial_calc.py` 進行精準複利與 4% 提領金流試算，並生成實體 Word 建議書文件。
+- **自動化產檔工作流**：必須呼叫 `scripts/financial_calc.py` 進行精準複利與 4% 提領金流試算，並生成實體 HTML 建議書文件。
 - 呼叫範例：
   ```bash
-  python scripts/financial_calc.py --client "<客戶名字>" --savings <每年儲蓄金額> --rate <預期報酬率> --duration <規劃年數> --out "output/全球資產配置與退休理財規劃建議書_<時間戳記>.docx"
+  python scripts/financial_calc.py --client "<客戶名字>" --savings <每年儲蓄金額> --rate <預期報酬率> --duration <規劃年數> --out "output/全球資產配置與退休理財規劃建議書_<時間戳記>.html"
   ```
-- 產出檔案後，**提供使用者實體下載與編輯路徑**，例如：`[理財規劃建議書.docx](file:///q:/%E6%88%91%E7%9A%84%E9%9B%B2%E7%AB%AF%E7%A1%AC%E7%A2%9F/Document/Antigravity2/%E7%90%86%E8%B2%A1%E9%A1%A7%E5%95%8F/output/%E5%85%A8%E7%90%83%E8%B3%87%E7%94%A2%E9%85%8D%E7%BD%AE%E8%88%87%E9%80%80%E4%BC%91%E7%90%86%E8%B2%A1%E8%A6%8F%E5%8A%A3%E5%BB%BA%E8%AD%B0%E6%9B%B8_<時間戳記>.docx)`。
+- 產出檔案後，**提供使用者實體下載與編輯路徑**，例如：`[理財規劃建議書.html](file:///q:/%E6%88%91%E7%9A%84%E9%9B%B2%E7%AB%AF%E7%A1%AC%E7%A2%9F/Document/Antigravity2/%E7%90%86%E8%B2%A1%E9%A1%A7%E5%95%8F/output/%E5%85%A8%E7%90%83%E8%B3%87%E7%94%A2%E9%85%8D%E7%BD%AE%E8%88%87%E9%80%80%E4%BC%91%E7%90%86%E8%B2%A1%E8%A6%8F%E5%8A%A3%E5%BB%BA%E8%AD%B0%E6%9B%B8_<時間戳記>.html)`。
+
 
 ## 3. 理財決策團隊協調與會診工作流
 - 當客戶提出資產配置診斷或投資建議需求時，作為「協調人」的你必須引導整個「理財決策團隊」進行會診。
