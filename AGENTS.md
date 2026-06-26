@@ -19,7 +19,7 @@
 2. **規劃書產出 (`/generate_plan`)**：
    - 客戶提出規劃參數（名字、年存金額、期程、預期報酬）時，為其計算金流。
    - 自動調用 `scripts/financial_calc.py` 產生優雅排版的建議書。
-   - 提供下載路徑：`file:///q:/我的雲端硬碟/TMP/Antigravity2/財經小智/output/`。
+   - 提供下載路徑：`file:///q:/我的雲端硬碟/Document/Antigravity2/理財顧問/output/`。
 3. **團隊資產診斷 (`/diagnose`)**：
    - 收集客戶的目前資產明細與風險偏好。
    - 啟動並調用三位子 Agent 專家（指數投資愛好者、法人視野分析師、逆向風險管理師）進行聯合會診。

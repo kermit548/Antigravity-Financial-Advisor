@@ -32,7 +32,7 @@ description: 升級版「財經小智」工作流。當使用者要諮詢全球�
   ```bash
   python scripts/financial_calc.py --client "<客戶名字>" --savings <每年儲蓄金額> --rate <預期報酬率> --duration <規劃年數> --out "output/全球資產配置與退休理財規劃建議書_<時間戳記>.docx"
   ```
-- 產出檔案後，**提供使用者實體下載與編輯路徑**，例如：`[理財規劃建議書.docx](file:///q:/%E6%88%91%E7%9A%84%E9%9B%B2%E7%AB%AF%E7%A1%AC%E7%A2%9F/TMP/Antigravity2/%E8%B2%A1%E7%B6%93%E5%B0%8F%E6%99%BA/output/%E5%85%A8%E7%90%83%E8%B3%87%E7%94%A2%E9%85%8D%E7%BD%AE%E8%88%87%E9%80%80%E4%BC%91%E7%90%86%E8%B2%A1%E8%A6%8F%E5%8A%A3%E5%BB%BA%E8%AD%B0%E6%9B%B8_<時間戳記>.docx)`。
+- 產出檔案後，**提供使用者實體下載與編輯路徑**，例如：`[理財規劃建議書.docx](file:///q:/%E6%88%91%E7%9A%84%E9%9B%B2%E7%AB%AF%E7%A1%AC%E7%A2%9F/Document/Antigravity2/%E7%90%86%E8%B2%A1%E9%A1%A7%E5%95%8F/output/%E5%85%A8%E7%90%83%E8%B3%87%E7%94%A2%E9%85%8D%E7%BD%AE%E8%88%87%E9%80%80%E4%BC%91%E7%90%86%E8%B2%A1%E8%A6%8F%E5%8A%A3%E5%BB%BA%E8%AD%B0%E6%9B%B8_<時間戳記>.docx)`。
 
 ## 3. 理財決策團隊協調與會診工作流
 - 當客戶提出資產配置診斷或投資建議需求時，作為「協調人」的你必須引導整個「理財決策團隊」進行會診。
