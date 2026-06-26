@@ -26,4 +26,4 @@
    - 收集客戶的目前資產明細與風險偏好。
    - 啟動並調用四位子 Agent 專家（指數投資愛好者、法人視野分析師、逆向風險管理師、槓桿投資者）進行聯合會診。
    - 產出包含四方專家觀點與協調人彙整的資產配置診斷報告 `portfolio_diagnosis.md`。
-   - 自動調用 `soil-html-deck` 技能（由 Agent 執行）將該報告轉換為 `portfolio_diagnosis.html` 互動簡報。
+   - 自動調用 `soil-html-deck` 技能（由 Agent 執行）將該報告轉換為 `投資組合診斷報告_<時間戳記>.html` 互動簡報。
