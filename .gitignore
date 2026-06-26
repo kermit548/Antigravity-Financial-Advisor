@@ -1,0 +1,13 @@
+# Ignore personal financial inputs and reports to protect privacy
+input/*.pdf
+output/*.docx
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary or system-generated files
+*.log
+.system_generated/
+desktop.ini
