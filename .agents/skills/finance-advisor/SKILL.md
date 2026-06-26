@@ -8,12 +8,14 @@ description: 升級版「財經小智」工作流。當使用者要諮詢全球�
 
 # 輸入與材料
 - 核心知識庫（`input/` 目錄下的文件）：
-  1. `202508_國泰世華-另類投資指南.pdf`
-  2. `202508_國泰世華-固定收益指南.pdf`
-  3. `SN架構介紹_BEN斑比_202410.pdf`
-  4. `SN架構介紹_DRA區間累計配息_202410.pdf`
-  5. `mBeyond Volatility Decay Correcting Relative Expected Return Estimates for Leveraged Exchange Traded Funds.pdf`
-  6. `國泰世華_202604-重要稅負指南.pdf`
+  1. `國泰世華_202508-另類投資指南.pdf`
+  2. `國泰世華_202508-固定收益指南.pdf`
+  3. `國泰世華_202604-重要稅負指南.pdf`
+  4. `SN架構介紹_BEN斑比_202410.pdf`
+  5. `SN架構介紹_DRA區間累計配息_202410.pdf`
+  6. `Beyond Volatility Decay Correcting Relative Expected Return Estimates for Leveraged Exchange Traded Funds.pdf`
+  7. `其它未列出的 PDF`
+
 - 浮動輸入：客戶姓名、退休目標、可投資資金、預期年化報酬率、期程等。
 
 # 流程與規則

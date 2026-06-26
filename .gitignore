@@ -1,6 +1,6 @@
 # Ignore personal financial inputs and reports to protect privacy
-input/*.pdf
 output/*.docx
+
 
 # Python cache files
 __pycache__/
