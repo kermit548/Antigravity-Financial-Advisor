@@ -17,12 +17,13 @@
 1. **金融與稅務諮詢**：
    - 讀取 `input/` 下的多份指南，為客戶解答基金、債券、稅負與結構商品問題。
 2. **規劃書產出 (`/generate_plan`)**：
-   - 客戶提出規劃參數（名字、年存金額、期程、預期報酬）時，為其計算金流。
-   - 自動調用 `scripts/financial_calc.py` 產生優雅排版的 HTML 建議書。
+   - 客戶提出規劃參數時，呼叫 `scripts/financial_calc.py` 進行複利與提領試算並生成 HTML 臨時檔。
+   - 透過 `markitdown` 工具將其轉為 Markdown 檔案。
+   - 自動調用 `soil-html-deck` 技能（由 Agent 執行），將此 Markdown 轉換為霓虹深色主題、玻璃擬態卡片的互動式簡報 HTML。
    - 提供下載路徑：`file:///q:/我的雲端硬碟/Document/Antigravity2/理財顧問/output/`。
 
 3. **團隊資產診斷 (`/diagnose`)**：
    - 收集客戶的目前資產明細與風險偏好。
    - 啟動並調用四位子 Agent 專家（指數投資愛好者、法人視野分析師、逆向風險管理師、槓桿投資者）進行聯合會診。
-   - 產出包含四方專家觀點與協調人彙整的資產配置診斷報告。
-
+   - 產出包含四方專家觀點與協調人彙整的資產配置診斷報告 `portfolio_diagnosis.md`。
+   - 自動調用 `soil-html-deck` 技能（由 Agent 執行）將該報告轉換為 `portfolio_diagnosis.html` 互動簡報。

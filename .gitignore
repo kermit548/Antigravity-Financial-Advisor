@@ -1,6 +1,7 @@
 # Ignore personal financial inputs and reports to protect privacy
 output/*.docx
 output/*.html
+output/*.md
 
 
 # Python cache files
