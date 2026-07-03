@@ -83,9 +83,9 @@ description: 升級版「財經小智」工作流。當使用者要諮詢全球�
   1. **生成插圖**：調用 `antigravity-draw` 技能（即系統 `generate_image` 工具）批次生成 8 張簡報所需的科技感插圖，命名為 `cover_bg.png`, `pain_point.png`, `compound_effect.png`, `summary_metrics.png`, `cashflow_safe.png`, `portfolio_pie.png`, `action_steps.png`, `cta_action.png` 並儲存在臨時或專案目錄中（例如 `output/slides/generated/`）。
   2. **一鍵編譯簡報**：呼叫 `scripts/generate_deck.py` 工具，傳入理財規劃參數與插圖目錄，動態進行複利與 4% 提領金流計算，並將插圖壓縮轉為 Base64 內嵌，一鍵產出互動簡報：
      ```bash
-     python scripts/generate_deck.py --client "<客戶名字>" --savings <每年儲蓄金額> --rate <預期報酬率> --duration <規劃年數> --images_dir "<插圖目錄>" --out "output/全球資產配置與退休理財規劃建議書_<時間戳記>.html"
+     python scripts/generate_deck.py --client "<客戶名字>" --savings <每年儲蓄金額> --rate <預期報酬率> --duration <規劃年數> --images_dir "<插圖目錄>" --out "output/退休理財規劃建議書_<時間戳記>.html"
      ```
-- 產出檔案後，**提供使用者實體下載與編輯路徑**，例如：`[理財規劃建議書.html](output/全球資產配置與退休理財規劃建議書_<時間戳記>.html)`。
+- 產出檔案後，**提供使用者實體下載與編輯路徑**，例如：`output/退休理財規劃建議書_<時間戳記>.html`。
 
 
 ## 3. 投資組合建議工作流（模式 5）
