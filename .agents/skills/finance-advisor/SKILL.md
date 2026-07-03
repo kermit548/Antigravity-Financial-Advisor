@@ -80,16 +80,12 @@ description: 升級版「財經小智」工作流。當使用者要諮詢全球�
 ## 2. 退休理財規劃與精準計算
 - 當客戶提出理財參數（例如：每年存 30 萬、存 20 年、報酬率 6%）時，**禁止使用語言模型自行估算複利**。
 - **自動化產檔與簡報化工作流**：
-  1. **精準計算**：呼叫 `scripts/financial_calc.py` 進行複利與 4% 提領金流試算，產生臨時計算書 HTML。
+  1. **生成插圖**：調用 `antigravity-draw` 技能（即系統 `generate_image` 工具）批次生成 8 張簡報所需的科技感插圖，命名為 `cover_bg.png`, `pain_point.png`, `compound_effect.png`, `summary_metrics.png`, `cashflow_safe.png`, `portfolio_pie.png`, `action_steps.png`, `cta_action.png` 並儲存在臨時或專案目錄中（例如 `output/slides/generated/`）。
+  2. **一鍵編譯簡報**：呼叫 `scripts/generate_deck.py` 工具，傳入理財規劃參數與插圖目錄，動態進行複利與 4% 提領金流計算，並將插圖壓縮轉為 Base64 內嵌，一鍵產出互動簡報：
      ```bash
-     python scripts/financial_calc.py --client "<客戶名字>" --savings <每年儲蓄金額> --rate <預期報酬率> --duration <規劃年數> --out "output/全球資產配置與退休理財規劃建議書_<時間戳記>_calc.html"
+     python scripts/generate_deck.py --client "<客戶名字>" --savings <每年儲蓄金額> --rate <預期報酬率> --duration <規劃年數> --images_dir "<插圖目錄>" --out "output/全球資產配置與退休理財規劃建議書_<時間戳記>.html"
      ```
-  2. **轉換為大綱**：呼叫 `markitdown` 工具，將計算 HTML 轉為 Markdown 檔案。
-     ```bash
-     markitdown "output/全球資產配置與退休理財規劃建議書_<時間戳記>_calc.html" -o "output/全球資產配置與退休理財規劃建議書_<時間戳記>.md"
-     ```
-  3. **簡報化轉換**：呼叫 `soil-html-deck` 技能（由 Agent 執行），將此 Markdown 轉換為霓虹深色主題、玻璃擬態卡片與互動切頁的 HTML 簡報，覆蓋寫入：`output/全球資產配置與退休理財規劃建議書_<時間戳記>.html`。
-- 產出檔案後，**提供使用者實體下載與編輯路徑**，例如：`[理財規劃建議書.html](output/理財規劃建議書_<時間戳記>.html)`。
+- 產出檔案後，**提供使用者實體下載與編輯路徑**，例如：`[理財規劃建議書.html](output/全球資產配置與退休理財規劃建議書_<時間戳記>.html)`。
 
 
 ## 3. 投資組合建議工作流（模式 5）

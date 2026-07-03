@@ -17,10 +17,9 @@
 1. **金融與稅務諮詢**：
    - 讀取 `input/` 下的多份指南，為客戶解答基金、債券、稅負與結構商品問題。
 2. **規劃書產出 (`/generate_plan`)**：
-   - 客戶提出規劃參數時，呼叫 `scripts/financial_calc.py` 進行複利與提領試算並生成 HTML 臨時檔。
-   - 透過 `markitdown` 工具將其轉為 Markdown 檔案。
-   - 自動調用 `soil-html-deck` 技能（由 Agent 執行），將此 Markdown 轉換為霓虹深色主題、玻璃擬態卡片的互動式簡報 HTML。
-   - 提供下載路徑：`output/`。
+   - 客戶提出規劃參數時，調用 `antigravity-draw` 技能生成 8 張簡報插圖並儲存至臨時目錄。
+   - 呼叫 `scripts/generate_deck.py` 傳入理財規劃參數與插圖目錄，動態進行複利與 4% 提領計算，自動將插圖壓縮並轉換為 Base64 內嵌，一鍵編譯成「霓虹深色 + 玻璃擬態」科技風格的互動簡報 HTML。
+   - 提供下載與預覽路徑：`output/`。
 
 3. **團隊資產診斷 (`/diagnose`)**：
    - 收集客戶的目前資產明細與風險偏好。
