@@ -20,7 +20,7 @@
    - 客戶提出規劃參數時，呼叫 `scripts/financial_calc.py` 進行複利與提領試算並生成 HTML 臨時檔。
    - 透過 `markitdown` 工具將其轉為 Markdown 檔案。
    - 自動調用 `soil-html-deck` 技能（由 Agent 執行），將此 Markdown 轉換為霓虹深色主題、玻璃擬態卡片的互動式簡報 HTML。
-   - 提供下載路徑：`file:///q:/我的雲端硬碟/Document/Antigravity2/理財顧問/output/`。
+   - 提供下載路徑：`output/`。
 
 3. **團隊資產診斷 (`/diagnose`)**：
    - 收集客戶的目前資產明細與風險偏好。
