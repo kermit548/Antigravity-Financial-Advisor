@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球資產配置與退休理財規劃建議書 - 測試客戶</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e27;
+            --bg-card: rgba(17, 22, 58, 0.7);
+            --ink: #eef3ff;
+            --ink-secondary: #b8c5e0;
+            --accent: #00d4ff;
+            --accent-pink: #ff006e;
+            --border: rgba(238, 243, 255, 0.15);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--ink);
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(255, 0, 110, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff 0%, var(--ink-secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .meta-info {
+            font-size: 14px;
+            color: var(--ink-secondary);
+            font-weight: 300;
+        }
+        
+        .meta-info span {
+            margin: 0 15px;
+            color: var(--accent);
+        }
+        
+        section {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        h2 {
+            font-size: 21px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--accent);
+            border-left: 4px solid var(--accent-pink);
+            padding-left: 12px;
+        }
+        
+        p {
+            font-size: 16px;
+            color: var(--ink-secondary);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+        
+        th {
+            background-color: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            font-weight: 600;
+            text-align: left;
+            padding: 14px 18px;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            color: var(--ink-secondary);
+            font-weight: 300;
+        }
+        
+        tr:hover td {
+            color: #fff;
+            background-color: rgba(238, 243, 255, 0.02);
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .summary-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .card-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .card-label {
+            font-size: 14px;
+            color: var(--ink-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .card-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .card-desc {
+            font-size: 13px;
+            color: var(--ink-secondary);
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        ul {
+            list-style-type: none;
+            margin-left: 10px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            color: var(--ink-secondary);
+            font-weight: 300;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        li::before {
+            content: "▪";
+            color: var(--accent-pink);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>全球資產配置與退休理財規劃建議書</h1>
+            <div class="meta-info">
+                客戶：<strong>測試客戶 先生/女士</strong>
+                <span>|</span>
+                規劃日期：<strong>2026/07/03</strong>
+            </div>
+        </header>
+
+        <section>
+            <h2>一、 退休理財規劃摘要</h2>
+            <p>本建議書旨在為您模擬長期資產複利增值與金流狀況。根據設定，在規劃期間內每年定期定額投入新台幣 300,000 元，以預期年化報酬率 6.00% 進行滾存，試算期程為 20 年。</p>
+            
+            <div class="summary-card">
+                <div class="card-item">
+                    <div class="card-label">期末累積資產總額</div>
+                    <div class="card-value">NT$ 11,697,818 元</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">退休年領金流 (4% 提領率試算)</div>
+                    <div class="card-value">NT$ 467,913 元</div>
+                    <div class="card-desc">相當於每月可彈性支配 NT$ 38,993 元</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>二、 全球化資產配置建議</h2>
+            <p>基於長線資產配置與風險分散考量，建議將您的退休組合重組為以下三大核心區塊：</p>
+            <ul>
+                <li><strong>核心被動股票資產 (50% - 60%)</strong>：以全球全市場低成本股市 ETF（如 VT 或 VTI 搭配 VXUS）為主，搭配台股市值型 ETF，以極低管理費完整參與全球與台灣經濟實質成長。</li>
+                <li><strong>AI 與硬資產進攻衛星 (20% - 30%)</strong>：集中於具備物理產能壟斷與強大定價權的半導體上游龍頭（如台積電 2330、DRAM 板塊），搭配主動式捷豹 ETF（如 00991A）以賺取超級週期的超額 Alpha。</li>
+                <li><strong>防禦型與現金流儲備 (10% - 20%)</strong>：包含穩定債息來源（如 00937B 現金流奶牛）、本人名下無時滯之台幣安全墊，以及外部美元安全網，提供斷頭補倉防禦與穩定息收。</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>三、 複利資產增長增值表</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center">年度</th>
+                        <th class="text-right">每年投入 (元)</th>
+                        <th class="text-right">當期利息收益 (元)</th>
+                        <th class="text-right">累積資產餘額 (元)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td class="text-center highlight">第 1 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 0</td>
+                        <td class="text-right highlight">NT$ 318,000</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 2 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 19,080</td>
+                        <td class="text-right highlight">NT$ 655,080</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 3 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 39,305</td>
+                        <td class="text-right highlight">NT$ 1,012,385</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 4 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 60,743</td>
+                        <td class="text-right highlight">NT$ 1,391,128</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 5 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 83,468</td>
+                        <td class="text-right highlight">NT$ 1,792,596</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 6 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 107,556</td>
+                        <td class="text-right highlight">NT$ 2,218,151</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 7 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 133,089</td>
+                        <td class="text-right highlight">NT$ 2,669,240</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 8 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 160,154</td>
+                        <td class="text-right highlight">NT$ 3,147,395</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 9 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 188,844</td>
+                        <td class="text-right highlight">NT$ 3,654,238</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 10 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 219,254</td>
+                        <td class="text-right highlight">NT$ 4,191,493</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 11 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 251,490</td>
+                        <td class="text-right highlight">NT$ 4,760,982</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 12 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 285,659</td>
+                        <td class="text-right highlight">NT$ 5,364,641</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 13 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 321,878</td>
+                        <td class="text-right highlight">NT$ 6,004,520</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 14 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 360,271</td>
+                        <td class="text-right highlight">NT$ 6,682,791</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 15 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 400,967</td>
+                        <td class="text-right highlight">NT$ 7,401,758</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 16 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 444,106</td>
+                        <td class="text-right highlight">NT$ 8,163,864</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 17 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 489,832</td>
+                        <td class="text-right highlight">NT$ 8,971,696</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 18 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 538,302</td>
+                        <td class="text-right highlight">NT$ 9,827,998</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 19 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 589,680</td>
+                        <td class="text-right highlight">NT$ 10,735,677</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-center highlight">第 20 年</td>
+                        <td class="text-right">NT$ 300,000</td>
+                        <td class="text-right">NT$ 644,141</td>
+                        <td class="text-right highlight">NT$ 11,697,818</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

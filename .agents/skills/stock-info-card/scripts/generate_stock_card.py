@@ -162,8 +162,8 @@ def download_and_draw_kline(symbol, out_path):
         print(f"[Warning] K 線圖下載或繪製失敗: {e}，將自動進入無 K 線降級模式。")
         return False
 
-def draw_rounded_block(draw, bbox, fill=(17, 22, 58, 150), outline=(27, 42, 107, 255), width=2, radius=12):
-    """繪製具有發光質感的圓角矩形框"""
+def draw_rounded_block(draw, bbox, fill=(17, 22, 58, 255), outline=(27, 42, 107, 255), width=2, radius=12):
+    """繪製具有發光質感的圓角矩形框 (預設為完全不透明 fill)"""
     draw.rounded_rectangle(bbox, radius=radius, fill=fill, outline=outline, width=width)
 
 def draw_text_multiline(draw, text, x, y, font, max_width, fill=(238, 243, 255), spacing=6):
@@ -199,24 +199,33 @@ def main():
     parser.add_argument("--symbol", required=True, help="股票代碼")
     parser.add_argument("--name", required=True, help="公司全銜")
     parser.add_argument("--price", type=float, required=True, help="最新價格")
-    parser.add_argument("--change", required=True, help="漲跌幅 (例如: +0.58 (+3.35%))")
+    parser.add_argument("--change", required=True, help="漲跌幅 (例如: +0.58 (+3.35%%))")
     parser.add_argument("--score", type=int, required=True, help="綜合評分 (0-100)")
     parser.add_argument("--regime", required=True, help="市場狀態")
     parser.add_argument("--trend", required=True, help="趨勢")
     parser.add_argument("--risk", required=True, help="風險")
-    parser.add_argument("--conclusion", required=True, help="核心結論")
+    parser.add_argument("--conclusion", required=True, help="核心結論/評級")
     parser.add_argument("--valuation", required=True, help="估值明細")
     parser.add_argument("--levels", required=True, help="關鍵價位 (格式為: 壓力:A|短支:B|...)")
-    parser.add_argument("--tactics", required=True, help="策略計畫 (格式為: 動作:A|建議倉位:B|...)")
+    parser.add_argument("--tactics", default="", help="策略計畫 (選填)")
     parser.add_argument("--catalysts", required=True, help="催化劑 (分號或分段區分)")
     parser.add_argument("--scenarios", required=True, help="未來劇本")
     parser.add_argument("--risks", required=True, help="主要風險 (分號或分段區分)")
+    parser.add_argument("--volume", default="N/A", help="當天成交量")
+    parser.add_argument("--factors", default="", help="波動因子剖析內容")
     parser.add_argument("--out", help="輸出圖片路徑")
 
     args = parser.parse_args()
 
+    import html
+    # 自動修復與還原 HTML 轉義字元 (如 amp;, lt;, gt; 等)
+    for key, value in vars(args).items():
+        if isinstance(value, str):
+            val_clean = html.unescape(value).replace('amp;', '').replace('&amp;', '')
+            setattr(args, key, val_clean)
+
     # 1. 決定輸出檔名與路徑
-    timestamp = datetime.now().strftime("%Y%m%d_%H%m%S")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_dir = "output"
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
@@ -230,18 +239,10 @@ def main():
     temp_kline_path = "output/temp_kline.png"
     has_kline = download_and_draw_kline(args.symbol, temp_kline_path)
 
-    # 3. 建立 Pillow 畫布與背景網格
-    # 降級排版判定：若有 K 線圖，總高度 1800 px；無 K 線圖，則降級為 1450 px
+    # 3. 建立 Pillow 畫布與背景 (無格線背景，保持均勻純色底色)
     total_height = 1800 if has_kline else 1450
     card = Image.new('RGBA', (1000, total_height), color=(10, 14, 39, 255))
     draw = ImageDraw.Draw(card)
-
-    # 繪製高科技感背景細格線
-    grid_color = (15, 23, 64, 60)
-    for x in range(0, 1000, 40):
-        draw.line([(x, 0), (x, total_height)], fill=grid_color, width=1)
-    for y in range(0, total_height, 40):
-        draw.line([(0, y), (1000, y)], fill=grid_color, width=1)
 
     # 載入不同大小字型
     font_xs = get_font(13)
@@ -250,10 +251,9 @@ def main():
     font_md = get_font(20, bold=True)
     font_lg = get_font(30, bold=True)
     font_xl = get_font(72, bold=True)
-    font_score = get_font(52, bold=True)
 
     # 決定漲跌顏色
-    is_up = args.change.strip().startswith('+')
+    is_up = args.change.strip().startswith('+') or args.change.strip().startswith('-') == False
     is_tw = args.symbol.upper().endswith('.TW') or args.symbol.upper().endswith('.TWO')
     accent_green = (38, 166, 154, 255)  # 霓虹綠
     accent_red = (239, 83, 80, 255)    # 霓虹紅
@@ -266,50 +266,39 @@ def main():
     # BLOCK 1: 標題區 (Header)
     # ----------------------------------------------------
     draw_rounded_block(draw, (30, 30, 970, 200))
-    draw.text((50, 45), "5888 MARKET COMMAND", fill=(122, 139, 184, 255), font=font_xs)
+    # 取代左上角 5888 字樣為亮黃色的「綜合研判海報」
+    draw.text((50, 45), "綜合研判海報", fill=accent_yellow, font=font_sm_bold)
     
     # 股票代號與名稱
     draw.text((50, 65), args.symbol, fill=(255, 255, 255, 255), font=font_xl)
-    draw.text((270, 78), "綜合研判海報", fill=accent_yellow, font=font_lg)
     draw.text((50, 155), args.name, fill=(184, 197, 224, 255), font=font_sm)
     
-    # 最新價格與漲跌
-    # 先畫最新的收盤價小圓角框
-    draw_rounded_block(draw, (680, 50, 950, 180), fill=(10, 14, 39, 180), outline=(50, 70, 140, 255))
-    draw.text((700, 60), f"最新收盤 {datetime.now().strftime('%Y-%m-%d')}", fill=(122, 139, 184, 255), font=font_xs)
-    draw.text((700, 80), f"{args.price:.2f}", fill=(255, 255, 255, 255), font=font_lg)
-    draw.text((700, 125), args.change, fill=price_color, font=font_md)
+    # 最新價格、漲跌與成交量
+    draw_rounded_block(draw, (680, 45, 950, 190), fill=(10, 14, 39, 255), outline=(50, 70, 140, 255))
+    draw.text((700, 52), f"最新收盤 {datetime.now().strftime('%Y-%m-%d')}", fill=(122, 139, 184, 255), font=font_xs)
+    draw.text((700, 72), f"{args.price:.2f}", fill=(255, 255, 255, 255), font=font_lg)
+    draw.text((700, 115), args.change, fill=price_color, font=font_md)
+    draw.text((700, 145), f"成交量: {args.volume}", fill=(184, 197, 224, 255), font=font_xs)
 
     # ----------------------------------------------------
-    # BLOCK 2: 核心結論區 (Conclusion)
+    # BLOCK 2: 核心結論區 (Conclusion - 改版)
     # ----------------------------------------------------
-    draw_rounded_block(draw, (30, 220, 970, 360))
-    draw.text((50, 235), "核心結論", fill=accent_yellow, font=font_md)
+    draw_rounded_block(draw, (30, 215, 970, 365))
+    draw.text((50, 225), "綜合評級結論", fill=accent_yellow, font=font_md)
     
-    # 評分分數
-    draw.text((50, 270), str(args.score), fill=accent_yellow, font=font_score)
-    draw.text((120, 310), "/ 100", fill=(122, 139, 184, 255), font=font_sm)
-    
-    # 三個屬性框
-    def draw_tag(text_label, text_val, x):
-        draw_rounded_block(draw, (x, 270, x+120, 335), fill=(20, 30, 70, 255), outline=(50, 70, 140, 255), radius=8)
-        draw.text((x+10, 275), text_label, fill=(122, 139, 184, 255), font=font_xs)
-        # 決定顏色
-        val_color = (255, 255, 255)
-        if text_val in ["偏多", "A", "低"]:
-            val_color = accent_green
-        elif text_val in ["偏空", "D", "E", "高"]:
-            val_color = accent_red
-        elif text_val in ["震盪", "B", "C", "中"]:
-            val_color = accent_yellow
-        draw.text((x+10, 298), text_val, fill=val_color, font=font_sm_bold)
-
-    draw_tag("Regime", args.regime, 180)
-    draw_tag("趨勢", args.trend, 315)
-    draw_tag("風險", args.risk, 450)
-    
-    # 右側結論文字
-    draw_text_multiline(draw, args.conclusion, 590, 260, font_sm, 350, spacing=4)
+    # 自動分析多行結論
+    conclusion_lines = args.conclusion.split('\n')
+    if len(conclusion_lines) >= 2:
+        # 第一行是大字評級 (例如: "[A] 傳世資產 (10年以上長期持有)")
+        rating_text = conclusion_lines[0].strip()
+        rating_color = accent_green if "[A]" in rating_text or "[B]" in rating_text else accent_red
+        draw.text((50, 258), rating_text, fill=rating_color, font=font_md)
+        
+        # 後續行為詳細描述
+        desc_text = "\n".join(conclusion_lines[1:]).strip()
+        draw_text_multiline(draw, desc_text, 50, 292, font_sm, 880, spacing=4)
+    else:
+        draw_text_multiline(draw, args.conclusion, 50, 258, font_sm, 880, spacing=4)
 
     # ----------------------------------------------------
     # BLOCK 3: 技術面 K 線區 (或降級排版)
@@ -322,7 +311,6 @@ def main():
         # 內嵌 K 線圖
         try:
             kline_img = Image.open(temp_kline_path)
-            # 調整大小以適應框
             kline_img = kline_img.resize((910, 380), Image.Resampling.LANCZOS)
             card.paste(kline_img, (45, 435))
             os.remove(temp_kline_path)  # 清理臨時檔
@@ -330,8 +318,6 @@ def main():
             print(f"[Warning] 貼入 K 線圖片失敗: {e}")
             
         # 下方指標列
-        # 解析指標數據 (假設由 levels 參數提供或內建分析)
-        # 我們直接在下方繪製漂亮的指標橫條框
         indicators = [
             ("MA5", "17.38", '#ffd54f'),
             ("MA20", "17.18", '#29b6f6'),
@@ -340,14 +326,10 @@ def main():
             ("ATR", "5.4%", '#ff8f00')
         ]
         
-        # 嘗試從 tactics 或 levels 中提取真實 MA
-        # 為簡單起見，可以直接抓取 K 線末尾值或帶入預設，我們由參數或預設呈現
-        # 為了高質感，畫出指標按鈕
         ix = 50
         for name, val, color_hex in indicators:
-            draw_rounded_block(draw, (ix, 835, ix+160, 885), fill=(10, 14, 39, 200), outline=(50, 70, 140, 255), radius=6)
+            draw_rounded_block(draw, (ix, 835, ix+160, 885), fill=(10, 14, 39, 255), outline=(50, 70, 140, 255), radius=6)
             draw.text((ix+10, 842), name, fill=(122, 139, 184, 255), font=font_xs)
-            # 轉換十六進制顏色
             r_c = int(color_hex[1:3], 16)
             g_c = int(color_hex[3:5], 16)
             b_c = int(color_hex[5:7], 16)
@@ -356,7 +338,6 @@ def main():
             
         kline_block_bottom = 910
     else:
-        # 降級警示標註
         draw_rounded_block(draw, (30, 380, 970, 480), fill=(50, 20, 20, 100), outline=accent_red)
         draw.text((50, 395), "一、技術面（數據異常已降級）", fill=accent_red, font=font_md)
         draw.text((50, 435), "⚠️ 網路環境受阻，未能取得即時歷史日 K 線圖，已自動跳過圖表，僅保留數值分析。", fill=(255, 200, 200, 255), font=font_sm)
@@ -369,7 +350,6 @@ def main():
     draw_rounded_block(draw, (30, y_start_mid, 485, y_start_mid + 250))
     draw.text((50, y_start_mid + 15), "二、公司與估值", fill=accent_yellow, font=font_md)
     
-    # 公司與估值內容換行
     val_y = y_start_mid + 55
     val_lines = [line.strip() for line in args.valuation.split('|') if line.strip()]
     for line in val_lines:
@@ -384,7 +364,6 @@ def main():
     level_items = [item.split(':') for item in args.levels.split('|') if ':' in item]
     for key, val in level_items:
         draw.text((535, level_y), key, fill=(122, 139, 184, 255), font=font_sm)
-        # 壓力標為紅/粉，危險標為深紅，其餘標為黃/綠
         text_c = accent_yellow
         if "壓力" in key:
             text_c = accent_red
@@ -405,22 +384,24 @@ def main():
     draw.text((50, y_start_mid2 + 15), "四、催化劑", fill=accent_blue, font=font_md)
     
     cat_y = y_start_mid2 + 55
-    # 支援以分號或逗號分隔
     cat_delimiters = [';', '；', ',', '，']
     cat_items = [args.catalysts]
     for delim in cat_delimiters:
         if delim in cat_items[0]:
             cat_items = cat_items[0].split(delim)
             break
-    # 若沒有上述符號，可能是 1. 2. 的格式
     if len(cat_items) == 1 and ";" not in args.catalysts:
-        # 嘗試以數字分割
         import re
         parsed = re.split(r'\d+\.', args.catalysts)
         cat_items = [c.strip() for c in parsed if c.strip()]
         
     for idx, item in enumerate(cat_items[:4]):
-        draw_text_multiline(draw, f"{idx+1}  {item.strip()}", 50, cat_y, font_sm, 400, spacing=4)
+        text_to_draw = item.strip()
+        import re
+        # 防止重複編號
+        if not re.match(r'^\d+[\.\s]', text_to_draw):
+            text_to_draw = f"{idx+1}. {text_to_draw}"
+        draw_text_multiline(draw, text_to_draw, 50, cat_y, font_sm, 400, spacing=4)
         cat_y += 45
 
     # 五、未來劇本
@@ -430,7 +411,6 @@ def main():
     sce_y = y_start_mid2 + 55
     sce_items = [item.split(':') for item in args.scenarios.split('|') if ':' in item]
     for key, val in sce_items:
-        # 先畫圓角框
         bg_col = (10, 30, 30, 255) if "強勢" in key else ((20, 20, 40, 255) if "中性" in key else (35, 15, 15, 255))
         border_col = accent_green if "強勢" in key else (accent_yellow if "中性" in key else accent_red)
         
@@ -440,41 +420,12 @@ def main():
         sce_y += 60
 
     # ----------------------------------------------------
-    # BLOCK 8 & 9: 策略計畫與主要風險
+    # BLOCK 8 & 9: 波動因子與主要風險
     # ----------------------------------------------------
     y_start_mid3 = y_start_mid2 + 270
     draw_rounded_block(draw, (30, y_start_mid3, 485, y_start_mid3 + 270))
-    draw.text((50, y_start_mid3 + 15), "六、策略計畫", fill=accent_green, font=font_md)
-    
-    tactics_items = {k: v for k, v in [item.split(':') for item in args.tactics.split('|') if ':' in item]}
-    
-    # 繪製動作動作框
-    action = tactics_items.get("動作", "WAIT")
-    act_col = accent_green if action == "ENTER" else accent_yellow
-    draw_rounded_block(draw, (50, y_start_mid3 + 55, 180, y_start_mid3 + 115), fill=(10, 14, 39, 200), outline=act_col, radius=6)
-    draw.text((65, y_start_mid3 + 60), "動作", fill=(122, 139, 184, 255), font=font_xs)
-    draw.text((65, y_start_mid3 + 78), action, fill=act_col, font=font_md)
-    
-    # 倉位
-    draw_rounded_block(draw, (195, y_start_mid3 + 55, 325, y_start_mid3 + 115), fill=(10, 14, 39, 200), outline=(50, 70, 140, 255), radius=6)
-    draw.text((210, y_start_mid3 + 60), "建議倉位", fill=(122, 139, 184, 255), font=font_xs)
-    draw.text((210, y_start_mid3 + 78), tactics_items.get("建議倉位", "N/A"), fill=accent_yellow, font=font_md)
-    
-    # 金額
-    draw_rounded_block(draw, (340, y_start_mid3 + 55, 470, y_start_mid3 + 115), fill=(10, 14, 39, 200), outline=(50, 70, 140, 255), radius=6)
-    draw.text((355, y_start_mid3 + 60), "金額", fill=(122, 139, 184, 255), font=font_xs)
-    draw.text((355, y_start_mid3 + 78), tactics_items.get("金額", "N/A"), fill=accent_blue, font=font_md)
-    
-    # 批次買入
-    batch_y = y_start_mid3 + 130
-    for b_key in ["第1批", "第2批", "第3批"]:
-        if b_key in tactics_items:
-            draw.text((50, batch_y), b_key, fill=(122, 139, 184, 255), font=font_sm)
-            draw.text((180, batch_y), tactics_items[b_key], fill=(238, 243, 255, 255), font=font_sm)
-            batch_y += 30
-            
-    # 停損停利
-    draw.text((50, batch_y + 10), f"停損 {tactics_items.get('停損', 'N/A')}  |  停利 {tactics_items.get('停利', 'N/A')}", fill=accent_red, font=font_sm_bold)
+    draw.text((50, y_start_mid3 + 15), "六、波動因子剖析", fill=accent_green, font=font_md)
+    draw_text_multiline(draw, args.factors, 50, y_start_mid3 + 55, font_sm, 400, spacing=4)
 
     # 主要風險
     draw_rounded_block(draw, (515, y_start_mid3, 970, y_start_mid3 + 270))
@@ -490,16 +441,15 @@ def main():
     for item in risk_items[:4]:
         draw_text_multiline(draw, f"- {item.strip()}", 535, risk_y, font_sm, 400, spacing=4)
         left, top, right, bottom = draw.textbbox((0, 0), item.strip(), font=font_sm)
-        # 計算高度，累加高度
         h = max(28, (bottom - top) + 12)
         risk_y += h
 
     # ----------------------------------------------------
-    # BLOCK 10: 頁尾資訊 (Footer)
+    # BLOCK 10: 頁尾資訊 (Footer - 暗黃色系與出品標籤)
     # ----------------------------------------------------
     y_footer = total_height - 50
-    draw_rounded_block(draw, (30, y_footer, 970, y_footer + 35), fill=(20, 25, 60, 255), outline=(50, 70, 140, 255), radius=6)
-    draw.text((50, y_footer + 8), "5888 股票戰情卡  |  wallet-5888.web.app/stock-card", fill=accent_yellow, font=font_xs)
+    draw_rounded_block(draw, (30, y_footer, 970, y_footer + 35), fill=(43, 37, 19, 255), outline=(207, 176, 86, 255), radius=6)
+    draw.text((50, y_footer + 8), "財經小智出品", fill=(253, 240, 196, 255), font=font_sm_bold)
     draw.text((700, y_footer + 8), "公開資料與規則計算，非投資建議", fill=(122, 139, 184, 255), font=font_xs)
 
     # 保存檔案
