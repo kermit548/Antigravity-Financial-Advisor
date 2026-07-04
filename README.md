@@ -52,4 +52,7 @@
 
 ## 快速啟動
 
+> [!IMPORTANT]
+> 本專案環境建議先安裝三師爸製作的 [Anti-Gravity 懶人包](https://github.com/mathruffian-dot/antigravity-lazy-pack)。
+
 直接在 AntiGravity / Claude Code 等支持 Agentic Workflow 的環境中開啟此專案目錄，Agent 將自動載入並進入「財經小智」理財顧問模式，依據 `AGENTS.md` 與各別 `SKILL.md` 規範，隨時為您與客戶提供極致精確的理財諮詢與自動化簡報編譯服務。
