@@ -2,6 +2,9 @@
 output/*.docx
 output/*.html
 output/*.md
+output/*.pdf
+input/*.pdf
+*.pdf
 
 
 # Python cache files
