@@ -1,11 +1,5 @@
-# Ignore personal financial inputs and reports to protect privacy
-output/*.docx
-output/*.html
-output/*.md
-output/*.pdf
-input/*.pdf
-*.pdf
-
+# Ignore all generated outputs
+output/
 
 # Python cache files
 __pycache__/
